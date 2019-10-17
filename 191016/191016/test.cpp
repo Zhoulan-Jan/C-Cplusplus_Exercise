@@ -73,7 +73,7 @@ void SelectSort(double *arr, int len) {
 void InsertSort(double *arr, int len) {
 	for (int i = 1; i < len; i++){
 		if (arr[i] < arr[i - 1]){
-			int toInsertNum = arr[i];
+			double toInsertNum = arr[i];
 			int j;
 			for (j = i - 1; toInsertNum<arr[j]; j--){
 				arr[j + 1] = arr[j];
@@ -87,7 +87,7 @@ void InsertSort(double *arr, int len) {
 void shellInsert(double *arr, int len, int dk){
 	for (int i = dk; i < len; i++){
 		if (arr[i] < arr[i - dk]){
-			int toInsertNum = arr[i];
+			double toInsertNum = arr[i];
 			int j;
 			for (j = i - dk; toInsertNum < arr[j] && j >= 0; j -= dk){
 				arr[j + dk] = arr[j];
@@ -144,17 +144,36 @@ void Merge(double *arr, double *backArr, int left, int mid, int right){
 	while (start2 <= end2){
 		backArr[k++] = arr[start2++];
 	}
+	//for (int k = left; k <= right; k++) {
+	//	arr[k] = backArr[k];
+	//}
 }
 void MergeSort(double *arr, double *returnArr, int left, int right){
 	double *returnArr2=NULL;
-	if (left == right) {
+	if (left >= right) {
 		returnArr[left] = arr[left];
+		return;
 	}
 	else {
-		int mid = (left + right) / 2;
-		MergeSort(arr, returnArr2, left, mid);
-		MergeSort(arr, returnArr2, mid + 1, right);
-		Merge(returnArr2, returnArr, left, mid, right);
+		int mid = ((right - left) >> 1) + left;  //(left + right) / 2;
+		int start1 = left;  int end1 = mid;
+		int start2 = mid + 1;  int end2 = right;
+		MergeSort(arr, returnArr2, start1, end1);
+		MergeSort(arr, returnArr2, start2, end2);
+		Merge(returnArr2, returnArr, left, mid, right);  //error
+		//int k = left;
+		//while (start1 <= end1 && start2 <= end2) {
+		//	returnArr[k++] = arr[start1] < arr[start2] ? arr[start1++] : arr[start2++];
+		//}
+		//while (start1 <= end1) {
+		//	returnArr[k++] = arr[start1++];
+		//}
+		//while (start2 <= end2) {
+		//	returnArr[k++] = arr[start2++];
+		//}
+		for (int k = left; k <= right; k++) {  //已排序好的数组给原数组
+			arr[k] = returnArr[k];
+		}
 	}
 }
 //堆排序
@@ -205,8 +224,9 @@ int main(){
 	//Print(arr, len);
 
 	printf("归并排序后：");
-	MergeSort(arr, arr, 0, len - 1);
-	Print(arr, len);
+	double reg[10] = { 0 };
+	MergeSort(arr, reg, 0, len - 1);
+	Print(reg, len);
 
 	system("pause");
 	return 0;
