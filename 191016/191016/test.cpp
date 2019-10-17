@@ -127,51 +127,68 @@ void QuickSort(double *arr, int low, int high){
 	}
 }
 
-//合并排序
+//归并排序
 //将两个或两个以上的有序表合并为一个有序表
-void Merge(double *arr, double *backArr, int left, int mid, int right){
-	//数组1 [left...mid]
-	//数组2 [mid+1...right]
-	int start1 = left;   int end1 = mid;
-	int start2 = mid + 1;  int end2 = right;
-	int k = left;//易错
-	while (start1 <= end1 && start2 <= end2){
-		backArr[k++] = arr[start1] < arr[start2] ? arr[start1++] : arr[start2++];
-	}
-	while (start1 <= end1){
-		backArr[k++] = arr[start1++];
-	}
-	while (start2 <= end2){
-		backArr[k++] = arr[start2++];
-	}
-	//for (int k = left; k <= right; k++) {
-	//	arr[k] = backArr[k];
-	//}
-}
-void MergeSort(double *arr, double *returnArr, int left, int right){
-	double *returnArr2=NULL;
+//void Merge(double *arr, double *backArr, int left, int right){
+//	//数组1 [left...mid]
+//	//数组2 [mid+1...right]
+//	int mid = (left + right) / 2;
+//	int start1 = left;   int end1 = mid;
+//	int start2 = mid + 1;  int end2 = right;
+//	int k = left; //易错
+//	while (start1 <= end1 && start2 <= end2){
+//		backArr[k++] = arr[start1] < arr[start2] ? arr[start1++] : arr[start2++];
+//	}
+//	while (start1 <= end1){
+//		backArr[k++] = arr[start1++];
+//	}
+//	while (start2 <= end2){
+//		backArr[k++] = arr[start2++];
+//	}
+//	for (int k = left; k <= right; k++) {
+//		arr[k] = backArr[k];
+//	}
+//}
+//void MergeSorterror(double *arr, double *returnArr, int left, int right){
+//	double *returnArr2 = { 0 };
+//	if (left >= right) {
+//		returnArr[left] = arr[left];
+//		return;
+//	}
+//	else {
+//		int mid = ((right - left) >> 1) + left;  //(left + right) / 2;
+//		int start1 = left;  int end1 = mid;
+//		int start2 = mid + 1;  int end2 = right;
+//		MergeSort(arr, returnArr2, start1, end1);
+//		MergeSort(arr, returnArr2, start2, end2);
+//		Merge(returnArr2, returnArr, left,right);  //error
+//	}
+//}
+
+//参考他人的算法
+void MergeSort(double *arr, double *returnArr, int left, int right) {
 	if (left >= right) {
-		returnArr[left] = arr[left];
+		//returnArr[left] = arr[left];
 		return;
 	}
 	else {
-		int mid = ((right - left) >> 1) + left;  //(left + right) / 2;
-		int start1 = left;  int end1 = mid;
-		int start2 = mid + 1;  int end2 = right;
-		MergeSort(arr, returnArr2, start1, end1);
-		MergeSort(arr, returnArr2, start2, end2);
-		Merge(returnArr2, returnArr, left, mid, right);  //error
-		//int k = left;
-		//while (start1 <= end1 && start2 <= end2) {
-		//	returnArr[k++] = arr[start1] < arr[start2] ? arr[start1++] : arr[start2++];
-		//}
-		//while (start1 <= end1) {
-		//	returnArr[k++] = arr[start1++];
-		//}
-		//while (start2 <= end2) {
-		//	returnArr[k++] = arr[start2++];
-		//}
-		for (int k = left; k <= right; k++) {  //已排序好的数组给原数组
+		int mid = ((right - left) >> 1) + left;
+		int start1 = left; int end1 = mid;
+		int start2 = mid + 1; int end2 = right;
+		MergeSort(arr, returnArr, start1, end1);
+		MergeSort(arr, returnArr, start2, end2);
+		int k = left;
+		while (start1 <= end1 && start2 <= end2) 
+		{
+			returnArr[k++] = arr[start1] < arr[start2] ? arr[start1++] : arr[start2++];
+		}
+		while (start1 <= end1) {
+			returnArr[k++] = arr[start1++];
+		}
+		while (start2 <= end2) {
+			returnArr[k++] = arr[start2++];
+		}
+		for (int k = left; k <= right; k++) {
 			arr[k] = returnArr[k];
 		}
 	}
