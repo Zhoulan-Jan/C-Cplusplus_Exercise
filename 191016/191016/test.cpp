@@ -5,6 +5,8 @@
 #include<iostream>
 #include<ctime>
 
+//#define LENGTH 20
+
 /**将数组升序排列
 // 插入排序//希尔排序//快速排序//合并排序//堆排序
 */
@@ -203,20 +205,22 @@ void Print(double *arr, int len){
 	printf("\n");
 }
 
+#define LENGTH 20
 int main(){
 	srand((unsigned)time(NULL));
-	double arr[10]={ 0 };
+	double arr[LENGTH]={ 0 };
 	/*printf("%f",rand()+ (rand() % 100)*0.01);*/
 	int len = sizeof(arr) / sizeof(arr[0]);
-	//BuildArr(arr,len);
+	BuildArr(arr,len);
 
-	//先用简单的，验证排序算法是否写对
-	for (int i = 0; i < len;i++){
-		arr[i] = len-i;
-	}
+	//先用简单的数据，验证排序算法是否写对
+	//for (int i = 0; i < len;i++){
+	//	arr[i] = len-i;
+	//}
 
 	printf("没有排序前：");
-	Print(arr, len);
+	/*Print(arr, len);*/
+	clock_t run_start = clock();
 
 	//printf("冒泡排序后：");
 	//BubbleSort(arr, len);
@@ -241,13 +245,28 @@ int main(){
 	//Print(arr, len);
 
 	printf("归并排序后：");
-	double reg[10] = { 0 };
+	double reg[LENGTH] = { 0 };
 	MergeSort(arr, reg, 0, len - 1);
-	Print(reg, len);
+	/*Print(reg, len);*/
+
+	//计算时间
+	clock_t run_end = clock();
+	double runtime = ((double)run_end - (double)run_start) / CLOCKS_PER_SEC;
+	printf("Run Time: %.3f s \n", runtime);
 
 	system("pause");
 	return 0;
 }
+
+//int main() {
+//	clock_t run_start = clock();
+//	myfunc();
+//	clock_t run_end = clock();
+//	double runtime = ((double)run_end - (double)run_start) / CLOCKS_PER_SEC;
+//	printf("Run Time: %.3f s \n", runtime);
+//	system("pause");
+//	return 0;
+//}
 
 
 
