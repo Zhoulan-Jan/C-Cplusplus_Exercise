@@ -5,7 +5,6 @@
 #include<iostream>
 #include<ctime>
 
-//#define LENGTH 20
 
 /**将数组升序排列
 // 插入排序//希尔排序//快速排序//合并排序//堆排序
@@ -196,6 +195,51 @@ void MergeSort(double *arr, double *returnArr, int left, int right) {
 	}
 }
 //堆排序
+void MaxHeap(double *arr, int len, int n)
+{
+	int parent = n;
+	int child = parent * 2 + 1;
+	double tmp = 0;
+	while (child < len)
+	{
+		if (child + 1 < len && arr[child] < arr[child + 1])
+			child++;
+		if (arr[parent] < arr[child])
+		{
+			tmp = arr[parent];
+			arr[parent] = arr[child];
+			arr[child] = tmp;
+			parent = child;
+			child = parent * 2 + 1;
+		}
+		else
+			break;
+
+	}
+}
+
+void BuildHeap(double *arr, int len)
+{
+	int i = len - 1;
+	for (i; i >= 0; i--)
+	{
+		MaxHeap(arr, len, i);
+	}
+}
+
+void HeapSort(double *arr, int len)
+{
+	BuildHeap(arr, len); //建堆
+	double tmp = 0;
+	int n = len - 1;
+	for (int i = len; i > 0; i--)
+	{
+		tmp = arr[0];    // 交换
+		arr[0] = arr[i - 1];
+		arr[i - 1] = tmp;
+		MaxHeap(arr, --len, 0);  //再次建堆
+	}
+}
 
 //打印数组
 void Print(double *arr, int len){
@@ -205,7 +249,7 @@ void Print(double *arr, int len){
 	printf("\n");
 }
 
-#define LENGTH 20
+#define LENGTH 200000
 int main(){
 	srand((unsigned)time(NULL));
 	double arr[LENGTH]={ 0 };
@@ -244,10 +288,13 @@ int main(){
 	//QuickSort(arr, 0, len-1);
 	//Print(arr, len);
 
-	printf("归并排序后：");
-	double reg[LENGTH] = { 0 };
-	MergeSort(arr, reg, 0, len - 1);
+	//printf("归并排序后：");
+	//double reg[LENGTH] = { 0 };
+	//MergeSort(arr, reg, 0, len - 1);
 	/*Print(reg, len);*/
+
+	printf("堆排序后：");
+	HeapSort(arr, len);
 
 	//计算时间
 	clock_t run_end = clock();
