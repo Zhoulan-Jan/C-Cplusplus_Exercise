@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#define LENGTH 200000
+#define LENGTH 2000000
 
 //四位小数 二十 二百 二千 二万 二十万 二百万
 //相等 不能用 ==
@@ -188,23 +188,24 @@ int main() {
 	//printf("查找成功的情况下：%.4f  下标：%d\n", SequenSearch(arr, len, index),index);
 	//SequenSearch2(arr, len, num_tofind);
 
-	printf("二分查找：\n");
-	QuickSort(arr, 0, len - 1);
-	//Print(arr, len);
-	clock_t run_start = clock();
-	printf("查找成功的情况下：%.4f  下标：%d\n", BinarySearch(arr, len, index),index);
+	//printf("二分查找：\n");
+	//QuickSort(arr, 0, len - 1);
+	////Print(arr, len);
+	//clock_t run_start = clock();
+	////printf("查找成功的情况下：%.4f  下标：%d\n", BinarySearch(arr, len, index),index);
 	//BinarySearch2(arr, len, num_tofind);
 
-	//printf("二叉搜索树：\n");
-	////建立二叉搜索树
-	//BiTree root = NULL;
-	//for (int i = 0; i < len; i++) {
-	//	root = insert(root, arr[i]);
-	//}
-	////PrintTree(root);  //中序输出二叉搜索树即为排序
+	printf("二叉搜索树：\n");
+	//建立二叉搜索树
+	clock_t run_start = clock();
+	BiTree root = NULL;
+	for (int i = 0; i < len; i++) {
+		root = insert(root, arr[i]);
+	}
+	//PrintTree(root);  //中序输出二叉搜索树即为排序
 	//clock_t run_start = clock();  //建立二叉搜索树会需要很多的时间
 	//printf("查找成功的情况下：%.4f  下标：%d\n", SearchTree(root, arr[index]), index);
-	////printf("查找不成功！"); SearchTree(root, num_tofind);
+	printf("查找不成功！"); SearchTree(root, num_tofind);
 
 	//计算时间
 	clock_t run_end = clock();
