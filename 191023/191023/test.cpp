@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#define LENGTH 20
+#define LENGTH 200000
 
 //四位小数 二十 二百 二千 二万 二十万 二百万
 //相等 不能用 ==
@@ -93,54 +93,73 @@ typedef struct BiNode{
 	double val; 
 	BiNode *rchild;
 	BiNode *lchild;
-	BiNode(double val) :val(val), rchild(NULL), lchild(NULL){}
+	//BiNode(double val) :val(val), rchild(NULL), lchild(NULL){}
 }*BiTree,BiTNode;
 
-//搜索
-//BiTree SearchBST(BiTree T, double key, BiTree f, BiTree p) {
-//	if (!T) {
-//		p = f;
-//		return false;
-//	}
-//	else if (key - T->val > 0.1) {  //在右子树搜索
-//		return SearchBST(T->rchild, key, T, p);
-//	} 
-//	else if (key - T->val < 0.1) {
-//		return SearchBST(T->lchild, key, T, p);
-//	}
-//	else {
-//		p = T;
-//	}
-//}
-
 //建树
-BiTree InsertBST(BiNode *T, int len, int *pi) {
-	//BiTree p = NULL;
-	//if (!SearchBST(T, elem, NULL, p)) {
-	//	BiTree newNode = (BiTree)malloc(sizeof(BiTNode));
-	//	newNode->val = elem;
-	//	newNode->lchild = newNode->rchild = NULL;
-	//	if (!p) {
-	//		T = newNode;
-	//	}
-	//	else if (elem - p->val < 0.1) {
-	//		p->lchild = newNode;
-	//	}
-	//	else p->rchild = newNode;
-	//}
-	BiTree newNode = (BiTree)malloc(sizeof(BiTNode));
-	newNode->val = T[*pi];
-	newNode->lchild = newNode->rchild = NULL;
-	if (T == NULL) {
-		return newNode;
+BiTree insert(BiTree root, double val) {
+	BiTree node = (BiTree)malloc(sizeof(BiTNode));
+	node->val = val;
+	node->lchild = node->rchild = NULL;
+	//空树
+	if (!root) {
+		root = node;
+		return root;
 	}
-	if (elem - T->val < 0.1) {
-		T->lchild = InsertBST(T, elem);
+	//找到合适的位置
+	BiTree cur = root;
+	BiTree parent = NULL;
+	while (cur != NULL) {
+		if (cur->val == val) {  //树中已有该节点
+			return NULL;
+		}
+		else if (cur->val < val) {
+			parent = cur;
+			cur = cur->rchild;
+		}
+		else {
+			parent = cur;
+			cur = cur->lchild;
+		}
+	} //循环结束后，cur == NULL
+	//将新的结点放到该位置
+	if (parent->val < val) {
+		parent->rchild = node;
 	}
-	else if (elem - T->val > 0.1) {
-		T->rchild = InsertBST(T, elem);
+	else {
+		parent->lchild = node;
 	}
-	return T;
+	return root;
+}
+
+//查找 成功
+double SearchTree(BiTree root, double target) {
+	if (root == NULL) {
+		return -1;
+	}
+	BiTree cur = root;
+	while (cur != NULL) {
+		if (cur->val == target) {
+			return cur->val;
+		}
+		else if (cur->val > target) {
+			cur = cur->lchild;
+		}
+		else {
+			cur = cur->rchild;
+		}
+	}
+	return -1;
+}
+
+//中序遍历
+void PrintTree(BiTree root) {
+	if (root == NULL) {
+		return;
+	}
+	PrintTree(root->lchild);
+	printf("%.4f  ", root->val);
+	PrintTree(root->rchild);
 }
 
 //打印数组
@@ -158,7 +177,7 @@ int main() {
 	BuildArr(arr, len);
 	//Print(arr, len);
 
-	clock_t run_start = clock();
+	//clock_t run_start = clock();
 
 	//查找成功:随机生成数组大小范围内的一个索引
 	int index = rand() % LENGTH;
@@ -169,17 +188,23 @@ int main() {
 	//printf("查找成功的情况下：%.4f  下标：%d\n", SequenSearch(arr, len, index),index);
 	//SequenSearch2(arr, len, num_tofind);
 
-	//printf("二分查找：\n");
-	//QuickSort(arr, 0, len - 1);
+	printf("二分查找：\n");
+	QuickSort(arr, 0, len - 1);
 	//Print(arr, len);
-	//printf("查找成功的情况下：%.4f  下标：%d\n", BinarySearch(arr, len, index),index);
+	clock_t run_start = clock();
+	printf("查找成功的情况下：%.4f  下标：%d\n", BinarySearch(arr, len, index),index);
 	//BinarySearch2(arr, len, num_tofind);
 
-	printf("二叉搜索树：\n");
-	BiTree head = InsertBST(arr,len, ;
-	for (int i = 1; i < len; i++) {
-		InsertBST(head, arr[i]);
-	}
+	//printf("二叉搜索树：\n");
+	////建立二叉搜索树
+	//BiTree root = NULL;
+	//for (int i = 0; i < len; i++) {
+	//	root = insert(root, arr[i]);
+	//}
+	////PrintTree(root);  //中序输出二叉搜索树即为排序
+	//clock_t run_start = clock();  //建立二叉搜索树会需要很多的时间
+	//printf("查找成功的情况下：%.4f  下标：%d\n", SearchTree(root, arr[index]), index);
+	////printf("查找不成功！"); SearchTree(root, num_tofind);
 
 	//计算时间
 	clock_t run_end = clock();
