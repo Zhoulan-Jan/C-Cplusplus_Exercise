@@ -16,12 +16,12 @@ private:
 	static int teamScore;
 public:
 	void Init();
-	void Print(student stu);
+	void Print();
 };
 
 //3名学生初始化
-void student::Init() {
-	student students[3];
+void student::Init(student students[]) {
+	//student students[3];
 	students[0].AdmissionNum = "001";
 	students[0].name = "Peter";
 	students[0].score = 88;
@@ -32,24 +32,63 @@ void student::Init() {
 	students[1].score = 99;
 
 	students[2].AdmissionNum = "003";
-	students[2].name = "Peter";
+	students[2].name = "Ron";
 	students[2].score = 79;
 }
 
 //信息输出
 void student::Print(student stu) {
-	cout << "成功！";
 	for (int i = 0; i < 3; i++) {
 		cout << stu.AdmissionNum << endl;
 		cout << stu.name << endl;
 		cout << stu.score << endl;
 	}
+	cout << "成功！";
  }
 
 int main() {
-	student stu;
-	stu.Init();
+	student stu[3];
+	stu.Init(stu);
 	stu.Print(stu);
 	system("pause");
 	return 0;
 }
+
+//#include<iostream>
+//using namespace std;
+//class student
+//{
+//public:
+//	student()
+//	{
+//
+//	}
+//	void print();
+//	void input()//输入学生信息
+//	{
+//		cin >> name >> id >> grade;
+//	}
+//private:
+//	string name;
+//	string id;
+//	double grade;
+//};
+//void student::print()
+//{
+//	cout << "name : " << name << ",  id : " << id << ",  grade  : " << grade << endl;
+//}
+//int main()
+//{
+//
+//	//student stu[3]={student("1","2",3),student("1","2",6),student("1","2",9)};
+//	student stu[3];
+//	for (int i = 0; i<3; i++)//输入三个学生信息
+//	{
+//		stu[i].input();
+//	}
+//	for (int i = 0; i<3; i++)//输出三个学生信息
+//	{
+//		stu[i].print();
+//	}
+//	return 0;
+//}
