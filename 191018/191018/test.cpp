@@ -1,11 +1,11 @@
-#define _CRT_SECURE_NO_WARNINGS 1
+ï»¿#define _CRT_SECURE_NO_WARNINGS 1
 
 #include<cstdio>
 #include<cstdlib>
 #include<iostream>
 using namespace std;
 
-//ÏÔÊ¾ËØÊı
+//æ˜¾ç¤ºç´ æ•°
 void Prime(int n) {
 	int i, j;
 	for (i = 2; i < n; i++) {
@@ -20,7 +20,7 @@ void Prime(int n) {
 	}
 }
 
-//Ã°ÅİÅÅĞò
+//å†’æ³¡æ’åº
 void BubbleSort(int *arr,int len) {
 	int flg = 1;
 	for (int i = 0; i < len-1; i++) {
@@ -40,8 +40,8 @@ void BubbleSort(int *arr,int len) {
 
 #define NUMSTU 4
 #define NUMCOR 3
-//¶şÎ¬Êı×é
-//ÊäÈë£¬
+//äºŒç»´æ•°ç»„
+//è¾“å…¥ï¼Œ
 void Intput(int arr[NUMSTU][NUMCOR], int row, int col) {
 	for (int i = 0; i < row; i++) {
 		for (int j = 0; j < col; j++) {
@@ -49,7 +49,7 @@ void Intput(int arr[NUMSTU][NUMCOR], int row, int col) {
 		}
 	}
 }
-//´òÓ¡Êä³ö£¬
+//æ‰“å°è¾“å‡ºï¼Œ
 void Print(int arr[NUMSTU][NUMCOR], int row, int col) {
 	for (int i = 0; i < row; i++) {
 		for (int j = 0; j < col; j++) {
@@ -59,7 +59,7 @@ void Print(int arr[NUMSTU][NUMCOR], int row, int col) {
 	}
 }
 
-//²éÕÒ£¬Ãû½ĞxxxµÄxx¿Î³Ì³É¼¨
+//æŸ¥æ‰¾ï¼Œåå«xxxçš„xxè¯¾ç¨‹æˆç»©
 void Search(int arr[NUMSTU][NUMCOR], int row, int col,string names[NUMSTU],string name,int course) {
 	int i;
 	for (i = 0; i < row; i++){
@@ -68,31 +68,31 @@ void Search(int arr[NUMSTU][NUMCOR], int row, int col,string names[NUMSTU],strin
 		}
 	}
 	if (i>row) {
-		printf("²éÎŞ´ËÈË\n");
+		printf("æŸ¥æ— æ­¤äºº\n");
 	}
 	if (course < col){
 		printf("%d \n", arr[i][course]);
 	}
 	else {
-		printf("ÎŞ´Ë³É¼¨\n");
+		printf("æ— æ­¤æˆç»©\n");
 	}
 }
 
-//¶ÔÍ¬Ò»ÃÅ¿Î³ÌµÄ²»Í¬Ñ§Éú³É¼¨ÅÅĞò£¬
+//å¯¹åŒä¸€é—¨è¯¾ç¨‹çš„ä¸åŒå­¦ç”Ÿæˆç»©æ’åºï¼Œ
 void Sort(int arr[NUMSTU][NUMCOR], int row, int col,int course) {
-	//int score1[] = { arr[0][0], arr[1][0], arr[2][0],arr[3][0] };  //ÈçºÎÖ»È¡µÚÒ»ÅÅµÄÊı×Ö
+	//int score1[] = { arr[0][0], arr[1][0], arr[2][0],arr[3][0] };  //å¦‚ä½•åªå–ç¬¬ä¸€æ’çš„æ•°å­—
 	int score1[NUMSTU] = { 0 };
 	int i;
 	for (i = 0; i < row; i++) {
 		score1[i] = arr[i][course];
 	}
-	printf("³É¼¨ÅÅĞòÇ°£º");
+	printf("æˆç»©æ’åºå‰ï¼š");
 	for (int i = 0; i < NUMSTU; i++){
 		printf("%d ", score1[i]);
 	}
 	printf("\n");
 	BubbleSort(score1, NUMSTU);
-	printf("³É¼¨ÅÅĞòºó£º");
+	printf("æˆç»©æ’åºåï¼š");
 	for (int i = 0; i < NUMSTU; i++){
 		printf("%d ", score1[i]);
 	}
@@ -101,14 +101,14 @@ void Sort(int arr[NUMSTU][NUMCOR], int row, int col,int course) {
 
 
 int main(){
-	//¶şÎ¬Êı×é
-	//m4¸öÍ¬Ñ§  n3ÃÅ³É¼¨
+	//äºŒç»´æ•°ç»„
+	//m4ä¸ªåŒå­¦  n3é—¨æˆç»©
 	int score[][3] = { { 88, 99, 100 },
 						{ 66, 55, 44 }, 
 						{ 22, 95, 77 },
 						{ 75, 62, 87 } };
 	
-	//int NumStu = sizeof(score) / sizeof(score[0]);  //Êä³öÑ§ÉúµÄÊıÁ¿
+	//int NumStu = sizeof(score) / sizeof(score[0]);  //è¾“å‡ºå­¦ç”Ÿçš„æ•°é‡
 	//int NumCourse = sizeof(score[0]) / sizeof(score[0][0]);
 	//printf("%d \n", NumStu);
 	//printf("%d \n", NumCourse);
@@ -122,12 +122,14 @@ int main(){
 	int course_tosort = 1;
 	Sort(score, NUMSTU, NUMCOR, course_tosort);
 
+	cout << "ç´ æ•°æ‰“å°ï¼š" << endl;
 	Prime(100);
 	printf("\n");
 
 	int array[] = { 4, 5, 8, 9, 6, 7 };
 	int len = sizeof(array) / sizeof(array[0]);
 	BubbleSort(array, len);
+	cout << "å†’æ³¡æ’åºï¼š" << endl;
 	for (int i = 0; i < len; i++){
 		printf("%d ", array[i]);
 	}
