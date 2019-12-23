@@ -55,11 +55,11 @@ int min(int x, int y) {
 
 //bit教的动态规划求背包
 //从上往下 从左往右
-int Knapsack(int capacity, int* weight, int* value, int n) {
+vector<vector<int>> Knapsack(int capacity, int* weight, int* value, int n) {
 	vector <vector <int>> F;
 	const int ROW = n + 1;
 	const int COL = capacity + 1;
-	F.resize(ROW);
+	F.resize(6);
 	//初始化全为零
 	for (int i = 0; i < ROW; i++) {
 		F[i].resize(COL, 0);
@@ -76,21 +76,15 @@ int Knapsack(int capacity, int* weight, int* value, int n) {
 			}
 		}
 	}
-	for (int i = 0; i < ROW; i++) {
-		for (int j = 0; j < COL; j++) {
-			printf("%2d  ", F[i][j]);
-		}
-		printf("\n");
-	}
-	//Traceback(F, n, capacity, weight);
-	return F[ROW - 1][COL - 1];
+	return F;
 }
 
-//根据二维状态数组 打印装入物品序号
+//根据二维状态数组 打印装入的物品序号
 void Traceback(vector<vector<int>> F, int num, int capacity, int *weight) {
-	const int NUM = num;
-	vector<int> x(NUM, 0);
-	for (int i = num; i > 0; i--) {
+	const int NUM = num + 1;
+	vector<int> x(F.size(), 0);
+	printf("%d ", F.size());
+	for (int i = F.size(); i > 0; i--) {
 		if (F[i][capacity] == F[i - 1][capacity]) {
 			x[i] = 0;
 		}
@@ -107,13 +101,15 @@ void Traceback(vector<vector<int>> F, int num, int capacity, int *weight) {
 }
 
 
-void print(int m[][10]) {
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 10; j++) {
-			printf("%d ", m[i][j]);
+void Print(vector<vector<int>> x) {
+	for (int i = 0; i < x.size(); i++) {
+		for (int j = 0; j < x[i].size(); j++) {
+			printf("%2d ", x[i][j]);
 		}
+		printf("\n");
 	}
 }
+
 //跳跃点法
 //回溯法
 //分支限界法
@@ -133,12 +129,16 @@ int main(){
 	int m[][10] = { 0 };
 	int x[5];
 
+	vector<vector<int>> F;
+	F.resize(num + 1);
+	for (int i = 0; i < num+1; i++) {
+		F[i].resize(capacity+1, 0);
+	}
 	//动态规划
-	printf("%d ",Knapsack(capacity, weight, value, num));
-
-	//Knapsack(v, w, c, n, (int **)m);
-	//Traceback((int **)m, w, c, n, x);
-	//print(m);
+	F = Knapsack(capacity, weight, value, num);
+	Print(F);
+	//Print(Knapsack(capacity, weight, value, num));
+	Traceback(F, num, capacity, weight);
 
 	//回溯法
 
