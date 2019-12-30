@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 
+//用动态规划问题解01背包
 #include<cstdio>
 #include<cstdlib>
 #include<string>
