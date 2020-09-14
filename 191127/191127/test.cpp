@@ -9,7 +9,7 @@
 #include<ctime>
 using namespace std;
 
-#define NUM 5
+#define NUM 100
 
 void Print(vector<vector<int>> x);
 
@@ -39,7 +39,7 @@ int min(int x, int y) {
 	return x > y ? y : x;
 }
 
-//bit教的动态规划求背包 //从上往下 从左往右
+//教的动态规划求背包 //从上往下 从左往右
 vector<vector<int>> Knapsack(int capacity, int* size, int* value, int n) {
 	vector <vector <int>> F;
 	const int ROW = n + 1;
@@ -65,7 +65,7 @@ vector<vector<int>> Knapsack(int capacity, int* size, int* value, int n) {
 }
 
 //根据二维状态数组 打印装入的物品序号
-void Traceback(vector<vector<int>> F, int num, int capacity, int *size) {
+void Traceback(vector<vector<int>> F, int num, int capacity, int *size, int * value) {
 	vector<int> x(F.size(), 0);
 	//printf("%d ", F.size()); //F.size = 6;
 	//Print(F);
@@ -79,13 +79,19 @@ void Traceback(vector<vector<int>> F, int num, int capacity, int *size) {
 			capacity -= size[i - 1]; //要非常注意
 		}
 	}
+	int maxVal = 0;
+	//printf("物品的选择：\n");
 	for (int i = 0; i < x.size(); i++) {
 		if (x[i] == 1) {
-			printf("%d ", size[i - 1]);
+			/*printf(" %d ", x[i]);*/
+			maxVal += value[i - 1];
+		}
+		else {
+			/*printf(" %d ", x[i]);*/
 		}
 	}
+	printf("\n所选择的物品最大价值:%d ", maxVal);
 }
-
 
 void Print(vector<vector<int>> x, int row, int col) {
 	for (int i = 0; i < row; i++) {
@@ -95,11 +101,6 @@ void Print(vector<vector<int>> x, int row, int col) {
 		printf("\n");
 	}
 }
-
-//跳跃点法
-//回溯法
-//分支限界法
-
 
 int main(){
 	srand((unsigned)time(NULL));
@@ -124,18 +125,18 @@ int main(){
 	int capacity = getCap(size, num);
 
 	printf("物品数量：%d 背包容量：%d \n", num, capacity);
-	printf("物品体积：\n");
-	for (int i = 0; i < NUM; i++){
-		printf("size: %d ", size[i]);
-	}
-	
-	printf("\n物品价值：\n");
+	//printf("物品体积：\n");
+	//for (int i = 0; i < NUM; i++){
+	//	printf("size: %2d ", size[i]);
+	//}
+	//
+	//printf("\n物品价值：\n");
 
-	for (int i = 0; i < NUM; i++){
-		printf("valu: %d ", value[i]);
-	}
+	//for (int i = 0; i < NUM; i++){
+	//	printf("valu: %2d ", value[i]);
+	//}
 
-	printf("\n");
+	//printf("\n");
 
 	vector<vector<int>> F;
 	F.resize(10);
@@ -143,16 +144,17 @@ int main(){
 		F[i].resize(10, 0);
 	}
 
+	clock_t run_start = clock();
 	//动态规划
 	F = Knapsack(capacity, size, value, num);
-	printf("\n状态递推二维数组:\n");
-	Print(F,num + 1, capacity + 1);
-	printf("所选择的物品体积：\n");
-	Traceback(F, num, capacity, size);
+	//printf("\n状态递推二维数组:\n");
+	//Print(F,num + 1, capacity + 1);
+	
+	Traceback(F, num, capacity, size, value);
 	printf("\n");
-	//回溯法
-
-	//分支限界法
+	clock_t run_end = clock();
+	double runtime = ((double)run_end - (double)run_start) / CLOCKS_PER_SEC;
+	printf("Run Time: %.3f s \n", runtime);
 
 	system("pause");
 	return 0;
