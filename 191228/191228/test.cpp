@@ -14,14 +14,37 @@
 using namespace std;
 //采用子集树
 
-const int num = 5; //物品数量
-int capacity = 10; //背包容量
-int size[] = { 2, 2, 6, 5, 4 }; //物品体积
-int value[] = { 6, 3, 5, 4, 6 }; //物品价值
+//const int num = 5; //物品数量
+//int capacity = 10; //背包容量
+//int size[] = { 2, 2, 6, 5, 4 }; //物品体积
+//int value[] = { 6, 3, 5, 4, 6 }; //物品价值
+
+const int num = 100; //物品数量
+int capacity; //背包容量
+int size[num]; //物品体积
+int value[num]; //物品价值
 
 int curSize = 0; //当前体积
 int curValue = 0; //当前价值
 int best = 0; //当前最优价值
+
+//随机产生100个物品 size , value
+void BuildArr(int *size, int *value, int len) {
+	for (int i = 0; i < len; i++) {
+		size[i] = rand() % 10 + 1;
+	}
+	for (int i = 0; i < len; i++) {
+		value[i] = rand() % 10 + 1;
+	}
+}
+//生成背包容量 物品总量的0.6-0.7
+int getCap(int *size, int len) {
+	int sum = 0;
+	for (int i = 0; i < len; i++) {
+		sum += size[i];
+	}
+	return sum * 0.6;
+}
 
 //(贪心）限界函数
 int Bound(int i) {
@@ -69,8 +92,15 @@ void Backtrack(int i) {
 }
 
 int main() {
+	srand((unsigned)time(NULL));
+	BuildArr(size, value, num);
+	capacity = getCap(size, num);
+	clock_t run_start = clock();
 	Backtrack(0);
-	printf("%d ", best);
+	clock_t run_end = clock();
+	double runtime = ((double)run_end - (double)run_start) / CLOCKS_PER_SEC;
+	printf("Run Time: %.3f s \n", runtime);
+	printf("最大价值：%d ", best);
 	system("pause");
 	return 0;
 }
